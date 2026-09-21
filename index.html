@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PLANET 3D | Impressão 3D</title>
+<link rel="icon" type="image/jpeg" href="logo marca.jpeg">
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0b0b;
+            color: #fff;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 8%;
+
+            background: #0b0b0b;
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #ff6a00;
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6a00;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            min-height: 560px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+            background: linear-gradient(
+                180deg,
+                #0b0b0b,
+                #111
+            );
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border: 1px solid #ff6a00;
+            border-radius: 30px;
+
+            color: #ff6a00;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 9vw, 100px);
+            line-height: 0.95;
+
+            margin-bottom: 25px;
+
+            font-weight: 900;
+            letter-spacing: -3px;
+        }
+
+        .hero h1 span {
+            color: #ff6a00;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            margin: auto;
+
+            color: #aaa;
+
+            font-size: 19px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* BOTÃO */
+
+        .btn {
+            display: inline-block;
+
+            padding: 14px 25px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            color: white;
+
+            background: #ff6a00;
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff7b1a;
+            transform: translateY(-3px);
+        }
+
+
+        /* PRODUTOS */
+
+        .produtos {
+            padding: 90px 8%;
+            background: #f5f5f5;
+            color: #111;
+        }
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .titulo h2 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .titulo p {
+            color: #666;
+        }
+
+
+        /* CATEGORIAS */
+
+        .categorias {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 45px;
+        }
+
+        .categoria {
+            padding: 11px 20px;
+
+            border-radius: 25px;
+
+            border: 1px solid #ddd;
+
+            background: white;
+
+            color: #444;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .categoria:hover {
+            border-color: #ff6a00;
+            color: #ff6a00;
+        }
+
+        .categoria.ativa {
+            background: #ff6a00;
+            color: white;
+            border-color: #ff6a00;
+        }
+
+
+        /* GRADE */
+
+        .grid {
+            max-width: 1200px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 28px;
+        }
+
+
+        /* CARD */
+
+        .produto {
+            background: white;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            border: 1px solid #e5e5e5;
+
+            transition: 0.3s;
+        }
+
+        .produto:hover {
+            transform: translateY(-6px);
+
+            border-color: #ff6a00;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.10);
+        }
+
+        .produto img {
+            width: 100%;
+
+            height: 280px;
+
+            object-fit: contain;
+
+            padding: 10px;
+
+            background: #eee;
+
+            display: block;
+        }
+
+        .produto-info {
+            padding: 25px;
+        }
+
+        .categoria-produto {
+            display: inline-block;
+
+            font-size: 12px;
+
+            color: #ff6a00;
+
+            background: #fff1e8;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .produto-info h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .produto-info p {
+            color: #666;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+        .preco {
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #111;
+
+            margin-bottom: 20px;
+        }
+
+        .produto .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        /* SOBRE */
+
+        .sobre {
+            padding: 90px 8%;
+
+            text-align: center;
+
+            background: #0b0b0b;
+        }
+
+        .sobre h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .sobre h2 span {
+            color: #ff6a00;
+        }
+
+        .sobre p {
+            max-width: 700px;
+
+            margin: auto;
+
+            color: #999;
+
+            line-height: 1.8;
+
+            font-size: 17px;
+        }
+
+
+        /* RODAPÉ */
+
+        footer {
+            padding: 30px;
+
+            text-align: center;
+
+            background: #050505;
+
+            color: #666;
+
+            border-top: 1px solid #1c1c1c;
+        }
+
+
+        /* CELULAR */
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+                font-size: 14px;
+            }
+
+            .hero {
+                min-height: 500px;
+            }
+
+            .hero h1 {
+                font-size: 58px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .titulo h2 {
+                font-size: 32px;
+            }
+
+            .produto img {
+                height: 260px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- CABEÇALHO -->
+
+    <header>
+
+        <div class="logo">
+            PLANET <span>3D</span>
+        </div>
+
+        <nav>
+
+            <a href="#inicio">
+                Início
+            </a>
+
+            <a href="#produtos">
+                Produtos
+            </a>
+
+            <a href="#sobre">
+                Sobre
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- INÍCIO -->
+
+    <section
+        class="hero"
+        id="inicio"
+    >
+
+        <div class="hero-content">
+
+            <div class="tag">
+                IMPRESSÃO 3D
+            </div>
+
+            <h1>
+                PLANET <span>3D</span>
+            </h1>
+
+            <p>
+                Produtos criativos, funcionais
+                e únicos produzidos através
+                da impressão 3D.
+            </p>
+
+            <a
+                href="#produtos"
+                class="btn"
+            >
+                VER PRODUTOS
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRODUTOS -->
+
+    <section
+        class="produtos"
+        id="produtos"
+    >
+
+        <div class="titulo">
+
+            <h2>
+                Nossos Produtos
+            </h2>
+
+            <p>
+                Encontre produtos para
+                diferentes necessidades.
+            </p>
+
+        </div>
+
+
+        <!-- CATEGORIAS -->
+
+        <div class="categorias">
+
+            <button
+                class="categoria ativa"
+                onclick="filtrarProdutos('todos', this)"
+            >
+                Todos
+            </button>
+
+            <button
+                class="categoria"
+                onclick="filtrarProdutos('decoracao', this)"
+            >
+                🏠 Decoração
+            </button>
+
+            <button
+                class="categoria"
+                onclick="filtrarProdutos('brinquedos', this)"
+            >
+                🧸 Brinquedos
+            </button>
+
+            <button
+                class="categoria"
+                onclick="filtrarProdutos('utilidades', this)"
+            >
+                🛠️ Utilidades
+            </button>
+
+            <button
+                class="categoria"
+                onclick="filtrarProdutos('chaveiros', this)"
+            >
+                🔑 Chaveiros
+            </button>
+
+        </div>
+
+
+        <!-- GRADE DOS PRODUTOS -->
+
+        <div class="grid">
+
+
+            <!-- PRODUTO 1 - OPALA -->
+
+            <div
+                class="produto"
+                data-categoria="decoracao"
+            >
+
+                <img
+                    src="opala.webp"
+                    alt="Porta Chaves Opala 3D"
+                >
+
+                <div class="produto-info">
+
+                    <span class="categoria-produto">
+                        Decoração
+                    </span>
+
+                    <h3>
+                        Porta Chaves Opala 3D
+                    </h3>
+
+                    <p>
+                        Porta-chaves decorativo
+                        inspirado no clássico
+                        Opala, produzido em
+                        impressão 3D com
+                        5 ganchos.
+                    </p>
+
+                    <div class="preco">
+                        R$ 69,90
+                    </div>
+
+                    <a
+                        href="https://s.shopee.com.br/AUuATX74Ls?share_channel_code=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn"
+                    >
+                        🛒 COMPRAR NA SHOPEE
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUTO 2 - DINOSSAURO -->
+
+            <div
+                class="produto"
+                data-categoria="brinquedos"
+            >
+
+                <!-- IMAGEM QUE VOCÊ ENVIOU -->
+
+                <img
+                    src="dinossauro.webp"
+                    alt="Dinossauro Articulado 3D"
+                >
+
+                <div class="produto-info">
+
+                    <span class="categoria-produto">
+                        Brinquedos
+                    </span>
+
+                    <h3>
+                        Dinossauro Articulado 3D
+                    </h3>
+
+                    <p>
+                        Dinossauro articulado
+                        produzido em impressão
+                        3D. Perfeito para
+                        crianças, decoração
+                        e colecionadores.
+                    </p>
+
+                    <div class="preco">
+                        R$ 25,00
+                    </div>
+
+                    <a
+                        href="https://s.shopee.com.br/7Kx9xWfcjE?share_channel_code=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn"
+                    >
+                        🛒 COMPRAR NA SHOPEE
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUTO 3 - KIT -->
+
+            <div
+                class="produto"
+                data-categoria="brinquedos"
+            >
+
+                <img
+                    src="dinossauro pacote.webp"
+                    alt="Kit com 10 Dinossauros Articulados 3D"
+                >
+
+                <div class="produto-info">
+
+                    <span class="categoria-produto">
+                        Brinquedos
+                    </span>
+
+                    <h3>
+                        Kit 10 Dinossauros
+                        Articulados 3D
+                    </h3>
+
+                    <p>
+                        Kit com 10 unidades
+                        de dinossauros
+                        articulados 3D.
+                        Ideal para festas,
+                        lembrancinhas,
+                        brincadeiras e
+                        colecionadores.
+                    </p>
+
+                    <div class="preco">
+                        R$ 109,16
+                    </div>
+
+                    <a
+                        href="https://s.shopee.com.br/6VO2y432ao?share_channel_code=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn"
+                    >
+                        🛒 COMPRAR NA SHOPEE
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- SOBRE -->
+
+    <section
+        class="sobre"
+        id="sobre"
+    >
+
+        <h2>
+            O futuro é <span>3D.</span>
+        </h2>
+
+        <p>
+            A PLANET 3D transforma ideias
+            em objetos reais através da
+            impressão 3D. Produtos criativos,
+            funcionais e diferentes para
+            o seu dia a dia.
+        </p>
+
+    </section>
+
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        © 2026 PLANET 3D —
+        Impressão 3D
+
+    </footer>
+
+
+    <!-- FILTRO -->
+
+    <script>
+
+        function filtrarProdutos(
+            categoriaSelecionada,
+            botaoClicado
+        ) {
+
+            const produtos =
+                document.querySelectorAll(".produto");
+
+            const botoes =
+                document.querySelectorAll(".categoria");
+
+
+            botoes.forEach(function(botao) {
+
+                botao.classList.remove("ativa");
+
+            });
+
+
+            botaoClicado.classList.add("ativa");
+
+
+            produtos.forEach(function(produto) {
+
+                const categoriaProduto =
+                    produto.getAttribute("data-categoria");
+
+
+                if (
+                    categoriaSelecionada === "todos" ||
+                    categoriaProduto === categoriaSelecionada
+                ) {
+
+                    produto.style.display = "block";
+
+                } else {
+
+                    produto.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
