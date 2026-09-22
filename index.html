@@ -1,49 +1,1780 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BlockCraft V7</title>
-<link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Planet 3D | Produtos em Impressão 3D</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="logo.jpeg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            background: #111;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ff6600;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6600;
+        }
+
+        /* =========================
+           BARRA DE NOVIDADES
+        ========================= */
+
+        .novidades {
+            background: #ff6600;
+            color: white;
+            padding: 11px 0;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .novidades-movimento {
+            display: inline-block;
+            padding-left: 100%;
+            animation: passar 30s linear infinite;
+        }
+
+        @keyframes passar {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 85px 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #ff6600;
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: #ddd;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .botao-principal {
+            display: inline-block;
+            margin-top: 30px;
+            background: #ff6600;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .botao-principal:hover {
+            background: #e65c00;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            padding: 70px 0;
+        }
+
+        .titulo-secao {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .titulo-secao h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .titulo-secao p {
+            color: #666;
+        }
+
+        /* =========================
+           BUSCA
+        ========================= */
+
+        .area-filtros {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .busca {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .busca input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .busca input:focus {
+            border-color: #ff6600;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filtros-titulo {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .filtro-btn {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .filtro-btn:hover,
+        .filtro-btn.ativo {
+            background: #ff6600;
+            color: white;
+            border-color: #ff6600;
+        }
+
+        /* =========================
+           PRODUTOS
+        ========================= */
+
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .produto {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .produto:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.13);
+        }
+
+        .produto-imagem {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background: #eee;
+        }
+
+        .produto-imagem img {
+            width: 100%;
+            height: 245px;
+            object-fit: cover;
+            display: block;
+            transition: 0.4s;
+        }
+
+        .produto:hover .produto-imagem img {
+            transform: scale(1.04);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ff6600;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .produto-conteudo {
+            padding: 20px;
+        }
+
+        .categoria {
+            font-size: 12px;
+            color: #ff6600;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .produto h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .produto-descricao {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .preco {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .botao-shopee {
+            display: block;
+            text-align: center;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .botao-shopee:hover {
+            background: #ff6600;
+        }
+
+        .sem-produtos {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        /* =========================
+           MAIS VENDIDOS
+        ========================= */
+
+        .mais-vendidos {
+            background: #111;
+            color: white;
+        }
+
+        .mais-vendidos .titulo-secao p {
+            color: #bbb;
+        }
+
+        .mais-vendidos-caixa {
+            max-width: 900px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .mais-vendido-card {
+            background: #1c1c1c;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .mais-vendido-card .numero {
+            font-size: 35px;
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .mais-vendido-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .mais-vendido-card p {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* =========================
+           COMO COMPRAR
+        ========================= */
+
+        .como-comprar {
+            background: white;
+        }
+
+        .passos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .passo {
+            text-align: center;
+            padding: 30px 20px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .passo-numero {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #ff6600;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .passo h3 {
+            margin-bottom: 10px;
+        }
+
+        .passo p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           COMPRA SEGURA
+        ========================= */
+
+        .compra-segura {
+            background: #f1f1f1;
+            text-align: center;
+        }
+
+        .segura-box {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .segura-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .segura-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .segura-box p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           BENEFÍCIOS
+        ========================= */
+
+        .beneficios {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .beneficio {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .beneficio-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .beneficio h3 {
+            margin-bottom: 8px;
+        }
+
+        .beneficio p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           INSTAGRAM
+        ========================= */
+
+        .instagram {
+            background: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .instagram h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .instagram p {
+            color: #bbb;
+            margin-bottom: 25px;
+        }
+
+        .instagram-btn {
+            display: inline-block;
+            background: #ff6600;
+            color: white;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .instagram-btn:hover {
+            background: #e65c00;
+        }
+
+        /* =========================
+           SOBRE
+        ========================= */
+
+        .sobre {
+            background: white;
+            text-align: center;
+        }
+
+        .sobre p {
+            max-width: 750px;
+            margin: auto;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #080808;
+            color: #aaa;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 14px;
+        }
+
+        footer span {
+            color: #ff6600;
+        }
+
+        /* =========================
+           MODAL IMAGEM
+        ========================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.88);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .fechar-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* =========================
+           VOLTAR AO TOPO
+        ========================= */
+
+        #voltarTopo {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: #ff6600;
+            color: white;
+            font-size: 23px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            z-index: 1500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            transition: 0.3s;
+        }
+
+        #voltarTopo:hover {
+            background: #111;
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .produtos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .beneficios {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px 5%;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .produtos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .passos {
+                grid-template-columns: 1fr;
+            }
+
+            .mais-vendidos-caixa {
+                grid-template-columns: 1fr;
+            }
+
+            .beneficios {
+                grid-template-columns: 1fr;
+            }
+
+            .filtros {
+                justify-content: center;
+            }
+
+            .filtros-titulo {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+
+            .produto-imagem img {
+                height: 280px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<div id="boot">
-  <div class="bootbox">
-    <h1>BLOCKCRAFT V7</h1>
-    <p>Construindo o mundo...</p>
-    <div class="bar"><i id="bootbar"></i></div>
-    <small>Se o navegador bloquear módulos, abra pelo Live Server.</small>
-  </div>
-</div>
-<div id="hud">
-  <div id="crosshair">+</div>
-  <div id="top">
-    <span id="coords">XYZ 0 0 0</span>
-    <span id="fps">FPS --</span>
-    <span id="time">Dia 1 • 06:00</span>
-  </div>
-  <div id="status">
-    <div class="hearts" id="hearts"></div>
-    <div class="hunger" id="hunger"></div>
-    <div class="xpwrap"><div id="xp"></div></div>
-  </div>
-  <div id="hotbar"></div>
-  <div id="hint">WASD mover • Espaço pular • Shift correr • Clique quebrar • Direito colocar • E inventário • F3 debug • Esc liberar mouse</div>
-</div>
-<div id="inventory" class="hidden">
-  <div class="panel">
-    <h2>Inventário</h2>
-    <div id="invgrid"></div>
-    <div class="craft">
-      <h3>Criação rápida</h3>
-      <div class="recipe" data-recipe="planks">🌲 Tronco → 4 Tábuas</div>
-      <div class="recipe" data-recipe="sticks">🪵 Tábuas → 4 Gravetas</div>
-      <div class="recipe" data-recipe="table">🧰 4 Tábuas → Bancada</div>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="logo">
+            PLANET <span>3D</span>
+        </div>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#como-comprar">Como comprar</a>
+            <a href="#sobre">Sobre</a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         NOVIDADES
+    ========================= -->
+
+    <div class="novidades">
+
+        <div class="novidades-movimento">
+
+            🔥 Confira os produtos da Planet 3D!
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            🖨️ Impressão 3D de qualidade!
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            🚀 Novidades chegando!
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            🔥 Confira os produtos da Planet 3D!
+
+        </div>
+
     </div>
-    <p>Pressione E para fechar</p>
-  </div>
-</div>
-<div id="debug" class="hidden"></div>
-<script type="module" src="./game.js"></script>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero" id="inicio">
+
+        <h1>
+            PLANET <span>3D</span>
+        </h1>
+
+        <p>
+            Produtos criativos, decoração e brinquedos
+            feitos em impressão 3D.
+        </p>
+
+        <a href="#produtos" class="botao-principal">
+            VER PRODUTOS
+        </a>
+
+    </section>
+
+
+    <!-- =========================
+         PRODUTOS
+    ========================= -->
+
+    <section id="produtos">
+
+        <div class="container">
+
+            <div class="titulo-secao">
+
+                <h2>Nossos Produtos</h2>
+
+                <p>
+                    Encontre produtos criativos feitos em impressão 3D.
+                </p>
+
+            </div>
+
+
+            <!-- BUSCA E FILTROS -->
+
+            <div class="area-filtros">
+
+                <div class="busca">
+
+                    <input
+                        type="text"
+                        id="campoBusca"
+                        placeholder="🔍 O que você está procurando?"
+                    >
+
+                </div>
+
+
+                <div class="filtros">
+
+                    <span class="filtros-titulo">
+                        Categoria:
+                    </span>
+
+                    <button class="filtro-btn categoria-btn ativo" data-categoria="todos">
+                        Todos
+                    </button>
+
+                    <button class="filtro-btn categoria-btn" data-categoria="decoracao">
+                        🏠 Decoração
+                    </button>
+
+                    <button class="filtro-btn categoria-btn" data-categoria="brinquedos">
+                        🧸 Brinquedos
+                    </button>
+
+                    <button class="filtro-btn categoria-btn" data-categoria="utilidades">
+                        🛠️ Utilidades
+                    </button>
+
+                    <button class="filtro-btn categoria-btn" data-categoria="chaveiros">
+                        🔑 Chaveiros
+                    </button>
+
+                </div>
+
+
+                <br>
+
+
+                <div class="filtros">
+
+                    <span class="filtros-titulo">
+                        Preço:
+                    </span>
+
+                    <button class="filtro-btn preco-btn ativo" data-preco="todos">
+                        Todos
+                    </button>
+
+                    <button class="filtro-btn preco-btn" data-preco="30">
+                        Até R$ 30
+                    </button>
+
+                    <button class="filtro-btn preco-btn" data-preco="30-70">
+                        R$ 30–R$ 70
+                    </button>
+
+                    <button class="filtro-btn preco-btn" data-preco="70-100">
+                        R$ 70–R$ 100
+                    </button>
+
+                    <button class="filtro-btn preco-btn" data-preco="100+">
+                        Acima de R$ 100
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRID DOS PRODUTOS -->
+
+            <div class="produtos-grid" id="listaProdutos">
+
+
+                <!-- PRODUTO 1 -->
+
+                <div
+                    class="produto"
+                    data-categoria="decoracao"
+                    data-preco="69.90"
+                    data-nome="porta chaves opala 3d"
+                >
+
+                    <div
+                        class="produto-imagem"
+                        onclick="abrirImagem('opala.webp')"
+                    >
+
+                        <span class="badge">
+                            DESTAQUE
+                        </span>
+
+                        <img
+                            src="opala.webp"
+                            alt="Porta Chaves Opala 3D"
+                        >
+
+                    </div>
+
+
+                    <div class="produto-conteudo">
+
+                        <div class="categoria">
+                            Decoração
+                        </div>
+
+                        <h3>
+                            Porta Chaves Opala 3D
+                        </h3>
+
+                        <p class="produto-descricao">
+                            Porta chaves decorativo inspirado no clássico Opala,
+                            com 5 ganchos para organizar suas chaves.
+                        </p>
+
+                        <div class="preco">
+                            R$ 69,90
+                        </div>
+
+                        <a
+                            href="https://s.shopee.com.br/AUuATX74Ls?share_channel_code=1"
+                            target="_blank"
+                            class="botao-shopee"
+                        >
+                            🛒 Comprar na Shopee
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUTO 2 -->
+
+                <div
+                    class="produto"
+                    data-categoria="brinquedos"
+                    data-preco="25"
+                    data-nome="dinossauro articulado 3d"
+                >
+
+                    <div
+                        class="produto-imagem"
+                        onclick="abrirImagem('dinossauro.webp')"
+                    >
+
+                        <span class="badge">
+                            MAIS VENDIDO
+                        </span>
+
+                        <img
+                            src="dinossauro.webp"
+                            alt="Dinossauro Articulado 3D"
+                        >
+
+                    </div>
+
+
+                    <div class="produto-conteudo">
+
+                        <div class="categoria">
+                            Brinquedos
+                        </div>
+
+                        <h3>
+                            Dinossauro Articulado 3D
+                        </h3>
+
+                        <p class="produto-descricao">
+                            Dinossauro totalmente articulado,
+                            divertido e ideal para crianças e colecionadores.
+                        </p>
+
+                        <div class="preco">
+                            R$ 25,00
+                        </div>
+
+                        <a
+                            href="https://s.shopee.com.br/7Kx9xWfcjE?share_channel_code=1"
+                            target="_blank"
+                            class="botao-shopee"
+                        >
+                            🛒 Comprar na Shopee
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUTO 3 -->
+
+                <div
+                    class="produto"
+                    data-categoria="brinquedos"
+                    data-preco="109.16"
+                    data-nome="kit 3 dinossauros articulados"
+                >
+
+                    <div
+                        class="produto-imagem"
+                        onclick="abrirImagem('dinossauro pacote.webp')"
+                    >
+
+                        <span class="badge">
+                            OFERTA
+                        </span>
+
+                        <img
+                            src="dinossauro pacote.webp"
+                            alt="Kit 3 Dinossauros Articulados 3D"
+                        >
+
+                    </div>
+
+
+                    <div class="produto-conteudo">
+
+                        <div class="categoria">
+                            Brinquedos
+                        </div>
+
+                        <h3>
+                            Kit 3 Dinossauros Articulados 3D
+                        </h3>
+
+                        <p class="produto-descricao">
+                            Kit com 3 dinossauros articulados,
+                            ideal para presente, coleção e lembrancinhas.
+                        </p>
+
+                        <div class="preco">
+                            R$ 109,16
+                        </div>
+
+                        <a
+                            href="https://s.shopee.com.br/6VO2y432ao?share_channel_code=1"
+                            target="_blank"
+                            class="botao-shopee"
+                        >
+                            🛒 Comprar na Shopee
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUTO 4 -->
+
+                <div
+                    class="produto"
+                    data-categoria="decoracao"
+                    data-preco="90.25"
+                    data-nome="aviao decorativo executivo"
+                >
+
+                    <div
+                        class="produto-imagem"
+                        onclick="abrirImagem('aviao.webp')"
+                    >
+
+                        <span class="badge">
+                            NOVO
+                        </span>
+
+                        <img
+                            src="aviao.webp"
+                            alt="Avião Decorativo Executivo"
+                        >
+
+                    </div>
+
+
+                    <div class="produto-conteudo">
+
+                        <div class="categoria">
+                            Decoração
+                        </div>
+
+                        <h3>
+                            Avião Decorativo Executivo
+                        </h3>
+
+                        <p class="produto-descricao">
+                            Escultura de avião em PLA com acabamento metálico.
+                            Ideal para mesa, escritório e sala.
+                        </p>
+
+                        <div class="preco">
+                            R$ 90,25
+                        </div>
+
+                        <a
+                            href="https://s.shopee.com.br/70KJZ14f1E?share_channel_code=1"
+                            target="_blank"
+                            class="botao-shopee"
+                        >
+                            🛒 Comprar na Shopee
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="sem-produtos" id="semProdutos">
+
+                😕 Nenhum produto encontrado.
+
+                <br>
+
+                Tente outra busca ou filtro.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIS VENDIDOS
+    ========================= -->
+
+    <section class="mais-vendidos">
+
+        <div class="container">
+
+            <div class="titulo-secao">
+
+                <h2>🏆 Mais vendidos</h2>
+
+                <p>
+                    Produtos que estão ganhando destaque na Planet 3D.
+                </p>
+
+            </div>
+
+
+            <div class="mais-vendidos-caixa">
+
+
+                <div class="mais-vendido-card">
+
+                    <div class="numero">
+                        01
+                    </div>
+
+                    <h3>
+                        Dinossauro Articulado
+                    </h3>
+
+                    <p>
+                        Um dos produtos favoritos para quem gosta
+                        de brinquedos 3D.
+                    </p>
+
+                </div>
+
+
+                <div class="mais-vendido-card">
+
+                    <div class="numero">
+                        02
+                    </div>
+
+                    <h3>
+                        Porta Chaves Opala
+                    </h3>
+
+                    <p>
+                        Decoração criativa para os apaixonados
+                        por carros clássicos.
+                    </p>
+
+                </div>
+
+
+                <div class="mais-vendido-card">
+
+                    <div class="numero">
+                        03
+                    </div>
+
+                    <h3>
+                        Kit Dinossauros
+                    </h3>
+
+                    <p>
+                        Kit com 3 dinossauros articulados
+                        para diversão e coleção.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         COMO COMPRAR
+    ========================= -->
+
+    <section class="como-comprar" id="como-comprar">
+
+        <div class="container">
+
+            <div class="titulo-secao">
+
+                <h2>📦 Como comprar?</h2>
+
+                <p>
+                    Comprar na Planet 3D é simples.
+                </p>
+
+            </div>
+
+
+            <div class="passos">
+
+
+                <div class="passo">
+
+                    <div class="passo-numero">
+                        1
+                    </div>
+
+                    <h3>
+                        Escolha seu produto
+                    </h3>
+
+                    <p>
+                        Encontre o produto que você deseja
+                        em nossa loja.
+                    </p>
+
+                </div>
+
+
+                <div class="passo">
+
+                    <div class="passo-numero">
+                        2
+                    </div>
+
+                    <h3>
+                        Clique em Comprar
+                    </h3>
+
+                    <p>
+                        Clique no botão para acessar
+                        o anúncio do produto na Shopee.
+                    </p>
+
+                </div>
+
+
+                <div class="passo">
+
+                    <div class="passo-numero">
+                        3
+                    </div>
+
+                    <h3>
+                        Finalize na Shopee
+                    </h3>
+
+                    <p>
+                        Confira o produto, escolha as opções
+                        disponíveis e finalize seu pedido diretamente
+                        na Shopee.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         COMPRA SEGURA
+    ========================= -->
+
+    <section class="compra-segura">
+
+        <div class="container">
+
+            <div class="segura-box">
+
+                <div class="segura-icon">
+                    🛡️
+                </div>
+
+                <h2>
+                    Compra segura pela Shopee
+                </h2>
+
+                <p>
+                    Ao clicar em "Comprar na Shopee", você será
+                    direcionado para o anúncio do produto na plataforma.
+                </p>
+
+                <p>
+                    As formas de pagamento, parcelamento e demais
+                    condições são apresentadas pela Shopee no momento
+                    da compra, de acordo com as opções disponíveis para
+                    cada cliente e pedido.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         BENEFÍCIOS
+    ========================= -->
+
+    <section>
+
+        <div class="container">
+
+            <div class="titulo-secao">
+
+                <h2>Por que escolher a Planet 3D?</h2>
+
+            </div>
+
+
+            <div class="beneficios">
+
+
+                <div class="beneficio">
+
+                    <div class="beneficio-icon">
+                        🖨️
+                    </div>
+
+                    <h3>
+                        Impressão 3D
+                    </h3>
+
+                    <p>
+                        Produtos fabricados utilizando
+                        tecnologia de impressão 3D.
+                    </p>
+
+                </div>
+
+
+                <div class="beneficio">
+
+                    <div class="beneficio-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        Produtos criativos
+                    </h3>
+
+                    <p>
+                        Itens diferentes para decoração,
+                        diversão e coleção.
+                    </p>
+
+                </div>
+
+
+                <div class="beneficio">
+
+                    <div class="beneficio-icon">
+                        🛒
+                    </div>
+
+                    <h3>
+                        Compra pela Shopee
+                    </h3>
+
+                    <p>
+                        Você finaliza seu pedido diretamente
+                        pela plataforma Shopee.
+                    </p>
+
+                </div>
+
+
+                <div class="beneficio">
+
+                    <div class="beneficio-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        Novidades
+                    </h3>
+
+                    <p>
+                        Novos produtos podem chegar
+                        constantemente à Planet 3D.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         INSTAGRAM
+    ========================= -->
+
+    <section class="instagram">
+
+        <div class="container">
+
+            <h2>
+                📸 Siga a Planet 3D
+            </h2>
+
+            <p>
+                Acompanhe novos produtos, novidades e projetos
+                de impressão 3D.
+            </p>
+
+            <!--
+                QUANDO VOCÊ TIVER O INSTAGRAM,
+                TROQUE O "#" PELO LINK DO SEU PERFIL.
+            -->
+
+            <a
+                href="#"
+                target="_blank"
+                class="instagram-btn"
+            >
+                📸 @seuinstagram
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SOBRE
+    ========================= -->
+
+    <section class="sobre" id="sobre">
+
+        <div class="container">
+
+            <div class="titulo-secao">
+
+                <h2>Sobre a Planet 3D</h2>
+
+            </div>
+
+            <p>
+                A Planet 3D trabalha com produtos criativos produzidos
+                através de impressão 3D, trazendo opções para decoração,
+                brinquedos, coleção e utilidades.
+                Nosso objetivo é transformar ideias em produtos
+                diferentes e interessantes.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026 <span>Planet 3D</span> —
+            Produtos em Impressão 3D
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         MODAL DA IMAGEM
+    ========================= -->
+
+    <div
+        class="modal"
+        id="modalImagem"
+        onclick="fecharImagem()"
+    >
+
+        <span class="fechar-modal">
+            ×
+        </span>
+
+        <img
+            id="imagemAmpliada"
+            src=""
+            alt="Imagem ampliada"
+            onclick="event.stopPropagation()"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         BOTÃO VOLTAR AO TOPO
+    ========================= -->
+
+    <button
+        id="voltarTopo"
+        onclick="voltarAoTopo()"
+        title="Voltar ao topo"
+    >
+        ↑
+    </button>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        /* =========================
+           FILTROS
+        ========================= */
+
+        let categoriaSelecionada = "todos";
+        let precoSelecionado = "todos";
+
+
+        const categoriaBotoes =
+            document.querySelectorAll(".categoria-btn");
+
+        const precoBotoes =
+            document.querySelectorAll(".preco-btn");
+
+        const produtos =
+            document.querySelectorAll(".produto");
+
+        const campoBusca =
+            document.getElementById("campoBusca");
+
+        const semProdutos =
+            document.getElementById("semProdutos");
+
+
+        categoriaBotoes.forEach(botao => {
+
+            botao.addEventListener("click", () => {
+
+                categoriaBotoes.forEach(btn => {
+                    btn.classList.remove("ativo");
+                });
+
+                botao.classList.add("ativo");
+
+                categoriaSelecionada =
+                    botao.dataset.categoria;
+
+                filtrarProdutos();
+
+            });
+
+        });
+
+
+        precoBotoes.forEach(botao => {
+
+            botao.addEventListener("click", () => {
+
+                precoBotoes.forEach(btn => {
+                    btn.classList.remove("ativo");
+                });
+
+                botao.classList.add("ativo");
+
+                precoSelecionado =
+                    botao.dataset.preco;
+
+                filtrarProdutos();
+
+            });
+
+        });
+
+
+        campoBusca.addEventListener("input", () => {
+
+            filtrarProdutos();
+
+        });
+
+
+        function filtrarProdutos() {
+
+            const busca =
+                campoBusca.value.toLowerCase().trim();
+
+            let encontrados = 0;
+
+
+            produtos.forEach(produto => {
+
+                const categoria =
+                    produto.dataset.categoria;
+
+                const preco =
+                    parseFloat(produto.dataset.preco);
+
+                const nome =
+                    produto.dataset.nome.toLowerCase();
+
+
+                let categoriaOK =
+                    categoriaSelecionada === "todos" ||
+                    categoria === categoriaSelecionada;
+
+
+                let precoOK = true;
+
+
+                if (precoSelecionado === "30") {
+
+                    precoOK = preco <= 30;
+
+                }
+
+                else if (precoSelecionado === "30-70") {
+
+                    precoOK =
+                        preco > 30 &&
+                        preco <= 70;
+
+                }
+
+                else if (precoSelecionado === "70-100") {
+
+                    precoOK =
+                        preco > 70 &&
+                        preco <= 100;
+
+                }
+
+                else if (precoSelecionado === "100+") {
+
+                    precoOK = preco > 100;
+
+                }
+
+
+                const buscaOK =
+                    nome.includes(busca);
+
+
+                if (
+                    categoriaOK &&
+                    precoOK &&
+                    buscaOK
+                ) {
+
+                    produto.style.display = "";
+
+                    encontrados++;
+
+                }
+
+                else {
+
+                    produto.style.display = "none";
+
+                }
+
+            });
+
+
+            if (encontrados === 0) {
+
+                semProdutos.style.display = "block";
+
+            }
+
+            else {
+
+                semProdutos.style.display = "none";
+
+            }
+
+        }
+
+
+        /* =========================
+           MODAL DAS IMAGENS
+        ========================= */
+
+        function abrirImagem(imagem) {
+
+            const modal =
+                document.getElementById("modalImagem");
+
+            const imagemAmpliada =
+                document.getElementById("imagemAmpliada");
+
+
+            imagemAmpliada.src = imagem;
+
+            modal.style.display = "flex";
+
+        }
+
+
+        function fecharImagem() {
+
+            document.getElementById("modalImagem")
+                .style.display = "none";
+
+        }
+
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                fecharImagem();
+
+            }
+
+        });
+
+
+        /* =========================
+           VOLTAR AO TOPO
+        ========================= */
+
+        const botaoTopo =
+            document.getElementById("voltarTopo");
+
+
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 400) {
+
+                botaoTopo.style.display = "block";
+
+            }
+
+            else {
+
+                botaoTopo.style.display = "none";
+
+            }
+
+        });
+
+
+        function voltarAoTopo() {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
+
 </body>
 </html>
